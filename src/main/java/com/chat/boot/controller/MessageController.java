@@ -20,53 +20,54 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("message")
 public class MessageController {
-	
-	public List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {
-		{
-			add(new HashMap<String, String>() {
-				{
-					put("id", "1");
-					put("text", "First Message");
-				}
-			});
-			add(new HashMap<String, String>() {
-				{
-					put("id", "2");
-					put("text", "Second Message");
-				}
-			});
-		}
-	};
 
-	@GetMapping
-	public List<Map<String, String>> list() {
-		return messages;
-	}
-	
-	@GetMapping("{id}")
-	public Map<String, String> getMessage(@PathVariable String id) {
-		return messages.stream().filter(message -> message.get("id").equals(id)).findFirst()
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource"));
-	}
-	
-	@PostMapping
-	public Map<String, String> addMessage(@RequestBody Map<String, String> message){
-		message.put("id", String.valueOf(messages.size()+1));
-		messages.add(message);
-		return message;
-	}
-	
-	@PutMapping("{id}")
-	public Map<String, String> updateMessage(@PathVariable String id, @RequestBody Map<String, String> message){
-		Map<String, String> oldMessage = getMessage(id);
-		oldMessage.putAll(message);
-		return message;
-	}
-	
-	@DeleteMapping("{id}")
-	public void delete(@PathVariable String id) {
-		Map<String, String> message = getMessage(id);
-		messages.remove(message);
-	}
+    public List<Map<String, String>> messages = new ArrayList<Map<String, String>>() {
+        {
+            add(new HashMap<String, String>() {
+                {
+                    put("id", "1");
+                    put("text", "First Message");
+                }
+            });
+            add(new HashMap<String, String>() {
+                {
+                    put("id", "2");
+                    put("text", "Second Message");
+                }
+            });
+        }
+    };
+
+    @GetMapping
+    public List<Map<String, String>> list() {
+        return messages;
+    }
+
+    @GetMapping("{id}")
+    public Map<String, String> getMessage(@PathVariable String id) {
+        return messages.stream().filter(message -> message.get("id").equals(id)).findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource"));
+    }
+
+    @PostMapping
+    public Map<String, String> addMessage(@RequestBody Map<String, String> message) {
+        message.put("id", String.valueOf(messages.size() + 1));
+        messages.add(message);
+        return message;
+    }
+
+    @PutMapping("{id}")
+    public Map<String, String> updateMessage(@PathVariable String id, @RequestBody Map<String, String> message) {
+        Map<String, String> oldMessage = getMessage(id);
+        oldMessage.putAll(message);
+        return message;
+    }
+
+    @DeleteMapping("{id}")
+    public void delete(@PathVariable String id) {
+        Map<String, String> message = getMessage(id);
+        System.out.println(id);
+        messages.remove(message);
+    }
 
 }
