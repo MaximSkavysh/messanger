@@ -35,6 +35,12 @@ public class MessageController {
                     put("text", "Second Message");
                 }
             });
+            add(new HashMap<String, String>() {
+                {
+                    put("id", "3");
+                    put("text", "Therd Message");
+                }
+            });
         }
     };
 
