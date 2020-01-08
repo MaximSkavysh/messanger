@@ -64,9 +64,10 @@ public class MessageController {
 
     @PutMapping("{id}")
     public Map<String, String> updateMessage(@PathVariable String id, @RequestBody Map<String, String> message) {
-        Map<String, String> oldMessage = getMessage(id);
-        oldMessage.putAll(message);
-        return message;
+        Map<String, String> messageDb = getMessage(id);
+        messageDb.putAll(message);
+        messageDb.put("id", id);
+        return messageDb;
     }
 
     @DeleteMapping("{id}")
