@@ -1,6 +1,7 @@
 package com.chat.boot.controller;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chat.boot.domain.Message;
+import com.chat.boot.domain.MessageViews;
 import com.chat.boot.exception.ResourceNotFoundException;
 import com.chat.boot.repo.MessageRepo;
+import com.fasterxml.jackson.annotation.JsonView;
 
 
 @RestController
@@ -32,6 +35,7 @@ public class MessageController {
 	}
 
     @GetMapping
+    @JsonView(MessageViews.DefaultView.class)
     public List<Message> list() {
         return messageRepo.findAll();
     }
@@ -43,6 +47,7 @@ public class MessageController {
 
     @PostMapping
     public Message addMessage(@RequestBody Message message) {
+    	message.setCreated(LocalDateTime.now());
         return messageRepo.save(message);
     }
 
